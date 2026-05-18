@@ -8,7 +8,10 @@ class Person:
 
 
 def create_person_list(people: list[dict]) -> list[Person]:
-    person_list = [Person(p["name"], p["age"]) for p in people]
+    person_list = [
+        Person(p["name"], p["age"])
+        for p in people
+    ]
 
     for married in people:
         current_person = Person.people[married["name"]]
