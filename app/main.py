@@ -8,17 +8,23 @@ class Person:
 
 
 def create_person_list(people: list) -> list:
-    person_list = []
-    for person in people:
-        person_list.append(Person(person["name"], person["age"]))
+    # 1. Заменили первый цикл на красивый генератор списков в одну строку
+    person_list = [Person(p["name"], p["age"]) for p in people]
 
+    # 2. Перебираем людей для связывания браков
     for married in people:
         current_person = Person.people[married["name"]]
-        if "wife" in married and married["wife"] is not None:
-            married_obj = Person.people[married["wife"]]
-            current_person.wife = married_obj
-        elif "husband" in married and married["husband"] is not None:
-            married_obj = Person.people[married["husband"]]
-            current_person.husband = married_obj
+
+        # Используем .get() для безопасного поиска жены
+        wife_name = married.get("wife")
+        if wife_name:
+            current_person.wife = Person.people[wife_name]
+
+        # Используем .get() для безопасного поиска мужа
+        husband_name = married.get("husband")
+        if husband_name:
+            current_person.husband = Person.people[husband_name]
+
+    return person_list
 
     return person_list
