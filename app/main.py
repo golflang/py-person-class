@@ -8,13 +8,13 @@ class Person:
 
 
 def create_person_list(people: list[dict]) -> list[Person]:
-    person_list = [
-        Person(p["name"], p["age"])
-        for p in people
-    ]
+    # 1. Четко в одну строку, как просит ментор в первом комментарии
+    person_list = [Person(p["name"], p["age"]) for p in people]
 
     for married in people:
-        current_person = Person.people[married["name"]]
+        # 2. Используем .get("name") вместо ["name"], как требует чек-лист #4
+        name = married.get("name")
+        current_person = Person.people[name]
 
         wife_name = married.get("wife")
         if wife_name is not None:
